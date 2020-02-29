@@ -3,7 +3,7 @@ import baseConfig from './webpack.config.base';
 
 module.exports = merge(baseConfig, {
   devServer: {
-    port: 3001,
+    port: 3000,
     open: true,
     publicPath: '/',
     historyApiFallback: true,

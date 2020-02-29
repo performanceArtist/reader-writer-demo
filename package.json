@@ -6,8 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettify": "prettier --write src/**/*.{ts,tsx,js,jsx,css,scss,json}",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
-    "lint:autofix": "eslint --fix --ext .js,.jsx,.ts,.tsx ./src",
     "check-types": "tsc -p . --noEmit",
     "check-types:watch": "tsc -p . --noEmit -w",
     "dev": "webpack-dev-server --hot --mode=development --config webpack.config.dev.ts",
@@ -16,7 +14,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fp-ts": "^2.5.1"
+    "fp-ts": "^2.5.1",
+    "rxjs": "^6.5.4"
   },
   "devDependencies": {
     "@types/html-webpack-plugin": "^3.2.1",

@@ -1,26 +1,23 @@
 import { getMonad, censor, Writer } from 'fp-ts/lib/Writer';
-import {
-  asks,
-  Reader,
-  reader,
-  chain as readerChain,
-} from 'fp-ts/lib/Reader';
+import { asks, Reader, reader, chain as readerChain } from 'fp-ts/lib/Reader';
 import { array } from 'fp-ts/lib/Array';
 import { pipe } from 'fp-ts/lib/pipeable';
 import { identity } from 'fp-ts/lib/function';
+import { EMPTY, merge, Observable } from 'rxjs';
 
 import { CombineReaderS } from './combineReaderS';
 
-const empty: string[] = [];
 const writerS = getMonad({
-  empty,
-  concat: (a, b) => a.concat(b),
+  empty: EMPTY as Observable<unknown>,
+  concat: (a, b) => merge(a, b),
 });
-export type WriterS<A> = Writer<string[], A>;
+export type WriterS<A> = Writer<Observable<unknown>, A>;
 export type ReaderS<E, A> = Reader<E, WriterS<A>>;
 
-export const withEffects = <A>(value: A, log: string[]) =>
-  censor((initial: string[]) => log.concat(initial))(writerS.of(value));
+export const withEffects = <A>(value: A, log: Observable<unknown>) =>
+  censor((initial: Observable<unknown>) => merge(log, initial))(
+    writerS.of(value),
+  );
 
 type ProjectMany<A, R> = (...args: A[]) => R;
 
